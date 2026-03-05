@@ -1,0 +1,4 @@
+/* Timeline Peace - Hide filtered tweets */
+.tl-peace-hidden {
+  display: none !important;
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Peace - Filter Religion Content from X/Twitter</title>
+  <meta name="description" content="A free Chrome extension that silently filters religion-related content from your X/Twitter timeline. Works on Chrome, Edge, Brave, Opera, Arc, and Vivaldi.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">🛡️ Timeline Peace</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Free &amp; Open Source</div>
+    <h1>Your Timeline.<br><span class="accent">Your Peace.</span></h1>
+    <p>A browser extension that silently filters religion-related content from your X/Twitter timeline — like an ad blocker, but for content you'd rather not see.</p>
+    <div class="hero-actions">
+      <a href="timeline-peace-extension.zip" download class="btn btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Extension
+      </a>
+      <a href="#install" class="btn btn-secondary">Installation Guide</a>
+    </div>
+    <p class="hero-meta">Works on Chrome, Edge, Brave, Opera, Arc &amp; Vivaldi</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <h2 class="section-title">Why Timeline Peace?</h2>
+    <p class="section-subtitle">Browse X/Twitter without religion-related content cluttering your feed.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Filtering</h3>
+        <p>Tweets are hidden the moment they appear — no flicker, no delay. Just like an ad blocker removes ads before you see them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>100% Private</h3>
+        <p>Everything runs locally in your browser. Zero data is sent anywhere. No accounts, no tracking, no analytics.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>200+ Keywords</h3>
+        <p>Pre-loaded with a comprehensive keyword list covering all major religions and common religious terms.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">➕</div>
+        <h3>Custom Keywords</h3>
+        <p>Add your own keywords to filter out any additional content you want to avoid seeing in your timeline.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Toggle On/Off</h3>
+        <p>Quickly enable or disable filtering with a single click from the extension popup. Your settings are saved.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Live Counter</h3>
+        <p>See how many tweets have been filtered in real-time with the badge counter on the extension icon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="how-inner">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Simple, effective, and completely transparent.</p>
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Monitors Your Timeline</h3>
+          <p>The extension watches for new tweets as they load in your feed using a DOM observer — the same technique ad blockers use.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Scans Tweet Text</h3>
+          <p>Each tweet's text content is checked against a comprehensive list of 200+ religion-related keywords using fast regex matching.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Hides Matching Tweets</h3>
+          <p>If a tweet contains religion-related content, it's instantly hidden from your view — no gaps, no placeholders, it simply vanishes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Keeps Count</h3>
+          <p>The extension badge shows how many tweets have been filtered in your current session, so you know it's working.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="install" id="install">
+    <h2 class="section-title">Installation Guide</h2>
+    <p class="section-subtitle">Choose your browser below for step-by-step instructions.</p>
+
+    <div class="browser-tabs">
+      <button class="browser-tab active" data-browser="chrome">🌐 Chrome</button>
+      <button class="browser-tab" data-browser="edge">🔵 Edge</button>
+      <button class="browser-tab" data-browser="brave">🦁 Brave</button>
+      <button class="browser-tab" data-browser="opera">🔴 Opera</button>
+      <button class="browser-tab" data-browser="arc">🌈 Arc</button>
+      <button class="browser-tab" data-browser="vivaldi">🎵 Vivaldi</button>
+    </div>
+
+    <!-- Chrome -->
+    <div class="browser-instructions active" id="chrome">
+      <h3>🌐 Google Chrome</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file using the button above and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Chrome and go to <code>chrome://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load unpacked"</strong> button in the top-left.</li>
+        <li>Select the <strong>unzipped folder</strong> containing the extension files (the one with <code>manifest.json</code> in it).</li>
+        <li>The extension icon will appear in your toolbar. Go to <strong>x.com</strong> and enjoy a filtered timeline!</li>
+      </ol>
+      <div class="note">
+        <strong>Tip:</strong> Pin the extension by clicking the puzzle icon in Chrome's toolbar and clicking the pin next to "Timeline Peace".
+      </div>
+    </div>
+
+    <!-- Edge -->
+    <div class="browser-instructions" id="edge">
+      <h3>🔵 Microsoft Edge</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Edge and go to <code>edge://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the bottom-left of the sidebar.</li>
+        <li>Click <strong>"Load unpacked"</strong> at the top of the page.</li>
+        <li>Select the <strong>unzipped folder</strong> containing the extension files.</li>
+        <li>The extension will appear in your toolbar. Visit <strong>x.com</strong> and your timeline will be filtered!</li>
+      </ol>
+      <div class="note">
+        <strong>Note:</strong> Edge fully supports Chrome extensions. The installation process is nearly identical to Chrome.
+      </div>
+    </div>
+
+    <!-- Brave -->
+    <div class="browser-instructions" id="brave">
+      <h3>🦁 Brave Browser</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Brave and go to <code>brave://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load unpacked"</strong> button.</li>
+        <li>Select the <strong>unzipped folder</strong> with the extension files.</li>
+        <li>You're all set! Visit <strong>x.com</strong> to see it in action.</li>
+      </ol>
+      <div class="note">
+        <strong>Fun fact:</strong> Brave already blocks ads — now Timeline Peace filters content too. Double protection for your browsing experience!
+      </div>
+    </div>
+
+    <!-- Opera -->
+    <div class="browser-instructions" id="opera">
+      <h3>🔴 Opera / Opera GX</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Opera and go to <code>opera://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load unpacked"</strong> button.</li>
+        <li>Select the <strong>unzipped folder</strong> containing the extension files.</li>
+        <li>Head to <strong>x.com</strong> and browse your cleaned-up timeline!</li>
+      </ol>
+      <div class="note">
+        <strong>Note:</strong> These same steps work for both Opera and Opera GX.
+      </div>
+    </div>
+
+    <!-- Arc -->
+    <div class="browser-instructions" id="arc">
+      <h3>🌈 Arc Browser</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Arc and go to <code>arc://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load unpacked"</strong> button.</li>
+        <li>Select the <strong>unzipped folder</strong> containing the extension files.</li>
+        <li>Open <strong>x.com</strong> in any Space and enjoy your filtered feed!</li>
+      </ol>
+      <div class="note">
+        <strong>Tip:</strong> Arc is built on Chromium, so all Chrome extensions work natively.
+      </div>
+    </div>
+
+    <!-- Vivaldi -->
+    <div class="browser-instructions" id="vivaldi">
+      <h3>🎵 Vivaldi</h3>
+      <ol>
+        <li><strong>Download</strong> the extension zip file and <strong>unzip</strong> it to a folder on your computer.</li>
+        <li>Open Vivaldi and go to <code>vivaldi://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load unpacked"</strong> button.</li>
+        <li>Select the <strong>unzipped folder</strong> containing the extension files.</li>
+        <li>Navigate to <strong>x.com</strong> and your timeline is now filtered!</li>
+      </ol>
+      <div class="note">
+        <strong>Note:</strong> Vivaldi uses the Chromium engine, so Chrome extensions work out of the box.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="faq-inner">
+      <h2 class="section-title">FAQ</h2>
+      <p class="section-subtitle">Common questions answered.</p>
+
+      <div class="faq-item">
+        <div class="faq-question">Does this extension collect any data?</div>
+        <div class="faq-answer">No. Everything runs 100% locally in your browser. No data is sent anywhere — no servers, no analytics, no tracking. Your browsing stays private.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Will it slow down Twitter/X?</div>
+        <div class="faq-answer">No. The extension uses a highly optimized regex engine and only scans tweet text as it loads. The performance impact is negligible — you won't notice any difference.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Can I add my own keywords?</div>
+        <div class="faq-answer">Yes! Click the extension icon in your toolbar to open the popup. You can add custom keywords to filter any additional content you want to avoid.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Can I temporarily disable it?</div>
+        <div class="faq-answer">Yes. Click the extension icon and use the toggle switch to turn filtering on or off. Your keyword settings are preserved.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Does it work on the mobile Twitter/X app?</div>
+        <div class="faq-answer">No. Browser extensions only work in desktop browsers. This extension filters content on x.com and twitter.com when accessed through a supported desktop browser.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Why not publish on the Chrome Web Store?</div>
+        <div class="faq-answer">Publishing to the Chrome Web Store requires a developer fee and review process. For now, you can install it directly using Developer mode — it works exactly the same way.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Does it work with Firefox?</div>
+        <div class="faq-answer">Not yet. This extension is built for Chromium-based browsers (Chrome, Edge, Brave, Opera, Arc, Vivaldi). Firefox uses a different extension format.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready for a peaceful timeline?</h2>
+    <p>Download Timeline Peace and take control of what you see on X/Twitter.</p>
+    <a href="timeline-peace-extension.zip" download class="btn btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Extension
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Timeline Peace &mdash; Free, open-source, and built for your browsing peace of mind.</p>
+  </footer>
+
+  <script>
+    // Browser tab switching
+    document.querySelectorAll('.browser-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.browser-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.browser-instructions').forEach(i => i.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.browser).classList.add('active');
+      });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        q.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
