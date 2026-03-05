@@ -220,6 +220,72 @@
       font-size: 12px;
       font-style: italic;
     }
+
+    .blocked-log {
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .blocked-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #2a3a4a;
+      font-size: 12px;
+    }
+
+    .blocked-item:last-child {
+      border-bottom: none;
+    }
+
+    .blocked-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .blocked-item-author {
+      color: #1d9bf0;
+      font-weight: 600;
+    }
+
+    .blocked-item-keyword {
+      background: #253341;
+      border: 1px solid #38444d;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #f4212e;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .blocked-item-text {
+      color: #8899a6;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .btn-small {
+      padding: 4px 10px;
+      border: 1px solid #38444d;
+      border-radius: 14px;
+      background: #253341;
+      color: #8899a6;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-small:hover {
+      background: #2c3e50;
+      color: #e7e9ea;
+    }
   </style>
 </head>
 <body>
@@ -248,6 +314,14 @@
       <button class="btn btn-primary" id="addKeyword">Add</button>
     </div>
     <div class="custom-keywords" id="customKeywordsList"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Recent Blocked Tweets</div>
+      <button class="btn-small" id="clearLog">Clear</button>
+    </div>
+    <div class="blocked-log" id="blockedLog"></div>
   </div>
 
   <div class="footer">

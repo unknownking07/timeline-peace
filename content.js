@@ -77,10 +77,13 @@
     "church and state", "religious freedom", "religious liberty",
   ];
 
+  const MAX_LOG_SIZE = 50;
+
   let enabled = true;
   let keywords = [];
   let hiddenCount = 0;
   let customKeywords = [];
+  let blockedLog = []; // Recent blocked tweets log
 
   // Build a regex from keywords for efficient matching
   let keywordRegex = null;
@@ -127,10 +130,11 @@
     );
   }
 
-  // Check if text contains religion-related content
-  function containsReligiousContent(text) {
-    if (!text || !keywordRegex) return false;
-    return keywordRegex.test(text);
+  // Check if text contains religion-related content, returns matched keyword
+  function matchReligiousContent(text) {
+    if (!text || !keywordRegex) return null;
+    const match = text.match(keywordRegex);
+    return match ? match[0] : null;
   }
 
   // Get the tweet article element from any child node
@@ -144,50 +148,92 @@
     return textEl ? textEl.textContent : "";
   }
 
+  // Get the author handle of a tweet
+  function getTweetAuthor(article) {
+    // Twitter uses data-testid="User-Name" for the name/handle block
+    const links = article.querySelectorAll('a[role="link"]');
+    for (const link of links) {
+      const href = link.getAttribute("href");
+      if (href && href.startsWith("/") && !href.includes("/status/")) {
+        const handle = href.replace("/", "@");
+        if (handle.length > 1 && handle !== "@") return handle;
+      }
+    }
+    return "unknown";
+  }
+
+  // Log a blocked tweet
+  function logBlockedTweet(author, text, matchedKeyword) {
+    const entry = {
+      author,
+      text: text.length > 200 ? text.slice(0, 200) + "..." : text,
+      keyword: matchedKeyword,
+      time: Date.now(),
+    };
+    blockedLog.unshift(entry);
+    if (blockedLog.length > MAX_LOG_SIZE) {
+      blockedLog.length = MAX_LOG_SIZE;
+    }
+    // Save to local storage for popup access
+    chrome.storage.local.set({ blockedLog });
+  }
+
+  // Create a placeholder bar for a hidden tweet
+  function createPlaceholder(article, matchedKeyword) {
+    const bar = document.createElement("div");
+    bar.className = "tl-peace-placeholder";
+    bar.innerHTML =
+      '<span class="tl-peace-placeholder-icon">🛡️</span>' +
+      '<span class="tl-peace-placeholder-text">Blocked by Timeline Peace</span>' +
+      '<span class="tl-peace-placeholder-keyword">matched: <strong>' +
+        matchedKeyword + '</strong></span>' +
+      '<span class="tl-peace-placeholder-peek">Show</span>';
+
+    const peekBtn = bar.querySelector(".tl-peace-placeholder-peek");
+    let revealed = false;
+
+    peekBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      revealed = !revealed;
+      article.style.display = revealed ? "" : "none";
+      peekBtn.textContent = revealed ? "Hide" : "Show";
+      bar.classList.toggle("tl-peace-placeholder-revealed", revealed);
+    });
+
+    return bar;
+  }
+
   // Hide a single tweet
-  function hideTweet(article) {
+  function hideTweet(article, matchedKeyword) {
     if (article.dataset.tlpeaceHidden) return;
 
-    article.dataset.tlpeaceHidden = "true";
-    article.classList.add("tl-peace-hidden");
+    const text = getTweetText(article);
+    const author = getTweetAuthor(article);
 
-    // Also hide the parent cell/wrapper to remove gaps
-    const cellInner = article.closest(
-      '[data-testid="cellInnerDiv"]'
-    );
-    if (cellInner) {
-      cellInner.classList.add("tl-peace-hidden");
-    }
+    article.dataset.tlpeaceHidden = "true";
+    article.style.display = "none";
+
+    // Insert placeholder bar before the article
+    const placeholder = createPlaceholder(article, matchedKeyword);
+    article.parentNode.insertBefore(placeholder, article);
+    article.dataset.tlpeacePlaceholderId = placeholder.dataset.tlpeaceId =
+      "ph-" + hiddenCount;
+
+    // Log it
+    logBlockedTweet(author, text, matchedKeyword);
 
     hiddenCount++;
     updateBadge();
   }
 
-  // Reveal a hidden tweet
-  function revealTweet(article) {
-    if (!article.dataset.tlpeaceHidden) return;
-
-    delete article.dataset.tlpeaceHidden;
-    article.classList.remove("tl-peace-hidden");
-
-    const cellInner = article.closest(
-      '[data-testid="cellInnerDiv"]'
-    );
-    if (cellInner) {
-      cellInner.classList.remove("tl-peace-hidden");
-    }
-
-    hiddenCount = Math.max(0, hiddenCount - 1);
-    updateBadge();
-  }
-
-  // Reveal all hidden tweets
+  // Reveal all hidden tweets and remove placeholders
   function revealAll() {
-    document.querySelectorAll(".tl-peace-hidden").forEach((el) => {
-      el.classList.remove("tl-peace-hidden");
-      if (el.dataset.tlpeaceHidden) {
-        delete el.dataset.tlpeaceHidden;
-      }
+    document.querySelectorAll(".tl-peace-placeholder").forEach((el) => {
+      el.remove();
+    });
+    document.querySelectorAll('[data-tlpeace-hidden="true"]').forEach((el) => {
+      el.style.display = "";
+      delete el.dataset.tlpeaceHidden;
     });
     hiddenCount = 0;
     updateBadge();
@@ -200,8 +246,9 @@
     const tweets = document.querySelectorAll('article[data-testid="tweet"]');
     tweets.forEach((article) => {
       const text = getTweetText(article);
-      if (containsReligiousContent(text)) {
-        hideTweet(article);
+      const matched = matchReligiousContent(text);
+      if (matched) {
+        hideTweet(article, matched);
       }
     });
   }
@@ -236,8 +283,9 @@
 
         for (const article of articles) {
           const text = getTweetText(article);
-          if (containsReligiousContent(text)) {
-            hideTweet(article);
+          const matched = matchReligiousContent(text);
+          if (matched) {
+            hideTweet(article, matched);
           }
         }
       }
@@ -260,18 +308,16 @@
   });
 
   // Listen for messages from popup
-  chrome.runtime.onMessage.addListener((msg) => {
+  chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === "getStats") {
-      chrome.runtime.sendMessage({
-        type: "stats",
-        hiddenCount: hiddenCount,
-      });
+      sendResponse({ hiddenCount, blockedLog });
     }
     if (msg.type === "rescan") {
       hiddenCount = 0;
       revealAll();
       scanTimeline();
     }
+    return true;
   });
 
   // Initialize
