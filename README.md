@@ -4,7 +4,7 @@
 
 Timeline Peace is a browser extension that silently removes religion-related tweets from your feed — like an ad blocker, but for content you'd rather not see.
 
-🌐 **Website:** [timeline-peace-on-x.vercel.app](https://timeline-peace-on-x.vercel.app)
+🌐 **Website:** [timeline-peace-on-x.vercel.app](https://timeline-peace.vercel.app/)
 
 ---
 
